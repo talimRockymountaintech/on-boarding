@@ -129,7 +129,7 @@ export default function HomePage() {
                 setByVerify("email")
                 handleOpen();
             } else {
-                toast.error({ title: "Something went wrong." })
+                toast.error({ title: result?.response?.data?.message})
             }
         })
 

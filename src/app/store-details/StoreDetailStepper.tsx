@@ -73,7 +73,7 @@ const mapDefaultValues = {
 }
 const StoreDetailStepper: React.FC = () => {
     const ISSERVER = typeof window === "undefined";
-    const [activeStep, setActiveStep] = useState(3);
+    const [activeStep, setActiveStep] = useState(0);
     const [loading, setLoading] = useState(false);
     const [searchAddress, setSearchAddress] = useState<any>(null);
     const [showPassword, setShowPassword] = useState(false);

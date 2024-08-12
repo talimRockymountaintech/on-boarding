@@ -19,6 +19,7 @@ interface ComponentProps {
 }
 const OtpModal = ({ open, handleClose, setEmailVerified, byVerify, setPhoneVerified, countryCode, phone, email, otp }: ComponentProps) => {
   const [OTPValue, setOTPValue] = useState<string>("");
+  const [loading, setLoading] = useState(false);
   const toast = new GToaster();
   const sendEmailOtp = async () => {
     try {
@@ -36,11 +37,16 @@ const OtpModal = ({ open, handleClose, setEmailVerified, byVerify, setPhoneVerif
 
   const handleVerify = () => {
     if (byVerify === "phone") {
+
       if (OTPValue.length === 6) {
+        setLoading(true)
         otp.confirm(OTPValue).then(async () => {
+          setLoading(false)
           setPhoneVerified(true);
           handleClose()
         }).catch((err: any) => {
+          setLoading(false)
+          toast.error({ title: "Something went wrong." })
           console.log(err)
         })
         // setPhoneVerified(true);
@@ -89,7 +95,14 @@ const OtpModal = ({ open, handleClose, setEmailVerified, byVerify, setPhoneVerif
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleVerify} autoFocus>
+        <Button onClick={handleVerify} autoFocus
+          startIcon={
+            loading ? (
+              <CircularProgress color="inherit" size="24px" />
+            ) : (
+              <></>
+            )
+          } >
           Verify Otp
         </Button>
       </DialogActions>

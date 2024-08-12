@@ -8,7 +8,7 @@ import StepLabel from '@mui/material/StepLabel';
 import { dialCodes as getDialCodes } from "../../../src/dialCode";
 import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
 import { StepIconProps } from '@mui/material/StepIcon';
-import { Autocomplete, Box, Button, Card, CardContent, CircularProgress, createFilterOptions, FormControl, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select, TextField } from '@mui/material';
+import { Autocomplete, Box, Button, Card, CardContent, CircularProgress, createFilterOptions, FormControl, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select, TextField, Typography } from '@mui/material';
 import GooglePlacesAutocomplete, { geocodeByAddress, geocodeByPlaceId, getLatLng } from 'react-google-places-autocomplete';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -23,6 +23,7 @@ import axios from 'axios';
 import withAuth from '../hoc/withAuth';
 import axiosInterceptorInstance from '@/axiosInterceptorInstance';
 import { GToaster } from '../helper/g_toaster';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 const StyledBox = styled("div")(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
@@ -72,7 +73,7 @@ const mapDefaultValues = {
 }
 const StoreDetailStepper: React.FC = () => {
     const superAdminId = localStorage.getItem("on_super_admin_id");
-    const [activeStep, setActiveStep] = useState(0);
+    const [activeStep, setActiveStep] = useState(3);
     const [loading, setLoading] = useState(false);
     const [searchAddress, setSearchAddress] = useState<any>(null);
     const [showPassword, setShowPassword] = useState(false);
@@ -1062,8 +1063,8 @@ const StoreDetailStepper: React.FC = () => {
 
                         </Box>
                     </Box>}
-                {activeStep === 3 && <Box mt={4}>
-                    Done
+                {activeStep === 3 && <Box mt={4} sx={{height:"30vh"}} display="flex" justifyContent="center" alignItems="center">
+                    <Typography variant='h4'><CheckCircleIcon/>Done</Typography> 
                 </Box>}
             </CardContent></Card>
     )

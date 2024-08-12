@@ -24,13 +24,13 @@ const { query } = parse(url, true);
 axiosInterceptorInstance.interceptors.request.use(
   (config) => {
     // Modify the request config here (add headers, authentication tokens)
-    const accessToken = localStorage.getItem(`userToken-${query.id}`) || "";
+    const accessToken = "demo";
     // If token is present add it to request's Authorization Header
     if (accessToken) {
       if (config.headers)
         config.headers.Authorization = `Bearer ${accessToken.substring(
           1,
-          accessToken.length - 1
+          accessToken?.length - 1
         )}`;
     }
     return config;

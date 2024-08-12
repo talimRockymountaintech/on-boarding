@@ -72,14 +72,19 @@ const mapDefaultValues = {
     landmark: '',
 }
 const StoreDetailStepper: React.FC = () => {
-    const superAdminId = localStorage.getItem("on_super_admin_id");
+    const ISSERVER = typeof window === "undefined";
     const [activeStep, setActiveStep] = useState(3);
     const [loading, setLoading] = useState(false);
     const [searchAddress, setSearchAddress] = useState<any>(null);
     const [showPassword, setShowPassword] = useState(false);
     const [timeZoneList, setTimeZoneList] = useState([]);
     const [currencyList, setCurrencyList] = useState([]);
-    const [currencyName, setCurrencyName] = useState("CAD")
+    const [currencyName, setCurrencyName] = useState("CAD");
+    let superAdminId = ""
+    if (!ISSERVER) {
+        superAdminId = localStorage.getItem("on_super_admin_id") || "";
+    }
+
     const toast = new GToaster();
     const {
         register,
@@ -246,13 +251,15 @@ const StoreDetailStepper: React.FC = () => {
         try {
             const response = await axiosInterceptorInstance.post(ApiUrl.STORE_ADD + superAdminId, payload);
             if (response.status === 200) {
-                localStorage.removeItem("on_super_admin_id");
+                const ISSERVER = typeof window === "undefined";
+                if (!ISSERVER) localStorage.removeItem("on_super_admin_id");
+
                 toast.success({ title: response?.data?.message })
                 setActiveStep(3)
             }
         } catch (error: any) {
             toast.error({ title: error?.response?.data?.message })
-        }finally{
+        } finally {
             setLoading(false)
         }
 
@@ -1063,8 +1070,8 @@ const StoreDetailStepper: React.FC = () => {
 
                         </Box>
                     </Box>}
-                {activeStep === 3 && <Box mt={4} sx={{height:"30vh"}} display="flex" justifyContent="center" alignItems="center">
-                    <Typography variant='h4'><CheckCircleIcon/>Done</Typography> 
+                {activeStep === 3 && <Box mt={4} sx={{ height: "30vh" }} display="flex" justifyContent="center" alignItems="center">
+                    <Typography variant='h4'><CheckCircleIcon />Done</Typography>
                 </Box>}
             </CardContent></Card>
     )

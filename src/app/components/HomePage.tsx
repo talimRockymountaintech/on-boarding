@@ -52,9 +52,9 @@ export default function HomePage() {
             name: "",
             password: "",
             email: "",
-            phone: 0,
+            phone: "",
             time_zone: "",
-          },
+        },
     });
     const getTimeZone = async () => {
         try {
@@ -85,23 +85,25 @@ export default function HomePage() {
                 is_verified: true,
                 is_active: true,
             });
-            if(response.status === 200){
-                  const superAdminId = response?.data?.data._id
-                  localStorage.setItem("on_super_admin_id", superAdminId);
-                  toast.success({title : response?.data?.message})
-                  login();
-                  route.push('/store-details');
+            if (response.status === 200) {
+                const superAdminId = response?.data?.data._id
+                const ISSERVER = typeof window === "undefined";
+                if (!ISSERVER) localStorage.setItem("on_super_admin_id", superAdminId);
+
+                toast.success({ title: response?.data?.message })
+                login();
+                route.push('/store-details');
             }
-        } catch (error:any) {
-            toast.error({title: error?.response?.data?.message})
-        }finally{
+        } catch (error: any) {
+            toast.error({ title: error?.response?.data?.message })
+        } finally {
             setLoading(false)
         }
     }
 
     // Phone verifed
     const handlePhoneVerifed = () => {
-    try {
+        try {
             const appVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', { "size": "invisible" });
             const phoneNumber = getValues("country_code") + getValues("phone");
             auth.signInWithPhoneNumber(phoneNumber, appVerifier)
@@ -115,7 +117,7 @@ export default function HomePage() {
         } catch (error) {
             console.log(error);
         }
-     
+
 
     }
 

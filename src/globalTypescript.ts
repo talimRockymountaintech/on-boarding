@@ -13,7 +13,7 @@ export type SInputs = {
     password: string;
     email: string;
     country_code: string;
-    phone: number;
+    phone: string;
     time_zone: string;
     status?: boolean;
     varified?: boolean;

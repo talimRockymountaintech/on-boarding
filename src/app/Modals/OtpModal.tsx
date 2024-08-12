@@ -13,7 +13,7 @@ interface ComponentProps {
   byVerify: string;
   setPhoneVerified: (e: boolean) => void;
   countryCode: string;
-  phone: number;
+  phone: string;
   email: string
   otp: any
 }
